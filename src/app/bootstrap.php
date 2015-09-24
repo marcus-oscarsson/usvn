@@ -47,7 +47,7 @@ require_once 'functions.php';
 /* Config Loading or Installation */
 try
 {
-  $config = new USVN_Config_Ini(USVN_CONFIG_FILE, USVN_CONFIG_SECTION, array('create' => true)));
+  $config = new USVN_Config_Ini(USVN_CONFIG_FILE, USVN_CONFIG_SECTION);
   if (empty($config) && file_exists(USVN_CONFIG_FILE))
     {
       echo 'Config file unreadeable';
