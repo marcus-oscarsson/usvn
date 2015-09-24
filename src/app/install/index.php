@@ -35,7 +35,7 @@ if (file_exists(USVN_CONFIG_FILE))
 	{
 	}
 } else{
-  $GLOBALS['language'] = 'en_US'
+  $GLOBALS['language'] = 'en_US';
 }
 
 
