@@ -45,7 +45,7 @@
 		}
 		try
 		{
-		  parent::__construct($filename, $section, array('create' => true);
+		  parent::__construct($filename, $section, array('create' => true));
 		}
 		catch (Exception $e)
 		{
