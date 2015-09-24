@@ -47,29 +47,29 @@ require_once 'functions.php';
 /* Config Loading or Installation */
 try
 {
-	$config = new USVN_Config_Ini(USVN_CONFIG_FILE, USVN_CONFIG_SECTION);
-	if (empty($config) && file_exists(USVN_CONFIG_FILE))
-	{
-		echo 'Config file unreadeable';
-		exit(0);
-	}
-	if (!isset($config->version))
-	{
-		header('Location: install.php');
-		exit(0);
-	}
-	if ($config->version != USVN_CONFIG_VERSION)
-	{
-		USVN_Update::runUpdate();
-	}
+  $config = new USVN_Config_Ini(USVN_CONFIG_FILE, USVN_CONFIG_SECTION, );
+  if (empty($config) && file_exists(USVN_CONFIG_FILE))
+    {
+      echo 'Config file unreadeable';
+      exit(0);
+    }
+  if (!isset($config->version))
+    {
+      header('Location: install.php');
+      exit(0);
+    }
+  if ($config->version != USVN_CONFIG_VERSION)
+    {
+      USVN_Update::runUpdate();
+    }
 }
 catch (Exception $e)
 {
-	header('Location: install.php');
-	// echo '<pre>' . "\n";
-	// echo $e;
-	// echo '</pre>' . "\n";
-	// exit(0);
+  header('Location: install.php');
+  // echo '<pre>' . "\n";
+  // echo $e;
+  // echo '</pre>' . "\n";
+  // exit(0);
 }
 
 /* USVN Configuration */
@@ -83,7 +83,7 @@ USVN_Template::initTemplate($config->template->name, USVN_MEDIAS_DIR);
 Zend_Registry::set('config', $config);
 Zend_Db_Table::setDefaultAdapter(Zend_Db::factory($config->database->adapterName, $config->database->options->toArray()));
 if (isset($config->database->prefix)) {
-	USVN_Db_Table::$prefix = $config->database->prefix;
+  USVN_Db_Table::$prefix = $config->database->prefix;
 }
 
 $front = Zend_Controller_Front::getInstance();
