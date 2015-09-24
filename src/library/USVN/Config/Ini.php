@@ -45,7 +45,7 @@ class USVN_Config_Ini extends Zend_Config_Ini
       }
     try
       {
-	parent::__construct($filename, $section, array('create' => true));
+	parent::__construct($filename, $section, true);
       }
     catch (Exception $e)
       {
