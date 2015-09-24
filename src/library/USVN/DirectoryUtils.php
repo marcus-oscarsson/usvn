@@ -18,159 +18,159 @@
  */
 class USVN_DirectoryUtils
 {
-    /**
-    * Remove a directory even if it is not empty.
-    */
-    static public function removeDirectory($remove_path)
-    {
-		if (!file_exists($remove_path)) {
-			return;
-		}
-        if (($path = realpath($remove_path)) !== FALSE) {
-            if (@chmod($path, 0777) === FALSE) {
-                throw new USVN_Exception(T_("Can't delete directory %s. Permission denied."), $path);
-            }
-            try {
-            	if (is_dir($path)) {
-                	$dh = opendir($path);
-            	} else {
-            		return;
-            	}
-            }
-            catch(Exception $e) {
-                return;
-            }
-            while (($file = readdir($dh)) !== false) {
-				if ($file != '.' && $file != '..') {
-					if (is_dir($path . DIRECTORY_SEPARATOR . $file)) {
-						USVN_DirectoryUtils::removeDirectory($path . DIRECTORY_SEPARATOR . $file);
-					}
-					else {
-                        if (chmod($path . DIRECTORY_SEPARATOR . $file, 0777) === FALSE) {
-                            throw new USVN_Exception(T_("Can't delete file %s.", $path . DIRECTORY_SEPARATOR . $file));
-                        }
-						unlink($path . DIRECTORY_SEPARATOR . $file);
-					}
-				}
-            }
-            closedir($dh);
-            if (@rmdir($path) === FALSE) {
-                throw new USVN_Exception(T_("Can't delete directory %s."), $path);
-            }
-        }
+  /**
+   * Remove a directory even if it is not empty.
+   */
+  static public function removeDirectory($remove_path)
+  {
+    if (!file_exists($remove_path)) {
+      return;
     }
-
-    /**
-     * List the first level of a directory
-     *
-     * @param string $path
-     * @todo add option to this method (level to scan, exclude file or not, juste directory, get more infomations...
-     * @return array
-     */
-    static public function listDirectory($path)
-	{
-		$res = array();
-		$dh = opendir($path);
-		if (!$dh) {
-			throw new USVN_Exception(T_("Can't read directory %s.", $path));
-		}
-		while (($subDir = readdir($dh)) !== false) {
-            if ($subDir != '.' && $subDir != '..' && $subDir != '.svn') {
-				array_push($res, $subDir);
-			}
-        }
-		return $res;
+    if (($path = realpath($remove_path)) !== FALSE) {
+      if (@chmod($path, 0777) === FALSE) {
+	throw new USVN_Exception(T_("Can't delete directory %s. Permission denied."), $path);
+      }
+      try {
+	if (is_dir($path)) {
+	  $dh = opendir($path);
+	} else {
+	  return;
 	}
-
-	/**
-	* Create and return a tmp directory
-	*
-	* @return string Path to tmp directory
-	*/
-	static public function getTmpDirectory()
-	{
-		$path = tempnam(sys_get_temp_dir(), "USVN_");
-		unlink($path);
-		mkdir($path);
-		return $path;
+      }
+      catch(Exception $e) {
+	return;
+      }
+      while (($file = readdir($dh)) !== false) {
+	if ($file != '.' && $file != '..') {
+	  if (is_dir($path . DIRECTORY_SEPARATOR . $file)) {
+	    USVN_DirectoryUtils::removeDirectory($path . DIRECTORY_SEPARATOR . $file);
+	  }
+	  else {
+	    if (chmod($path . DIRECTORY_SEPARATOR . $file, 0777) === FALSE) {
+	      throw new USVN_Exception(T_("Can't delete file %s.", $path . DIRECTORY_SEPARATOR . $file));
+	    }
+	    unlink($path . DIRECTORY_SEPARATOR . $file);
+	  }
 	}
+      }
+      closedir($dh);
+      if (@rmdir($path) === FALSE) {
+	throw new USVN_Exception(T_("Can't delete directory %s."), $path);
+      }
+    }
+  }
 
-	/**
-	 * Return true if path === / on Unix or path == C: or D: or ... on Windows
-	 *
-	 * @param Path
-	 * @return boolean
-	 */
-	static public function isRootDirectory($path)
-	{
-		if(strtoupper(substr(PHP_OS, 0,3)) == 'WIN' ) {
-			if (!preg_match('#[A-Z]:([\\\\/]+).+#', $path)) {
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
-		else {
-			return $path === '/';
-		}
-	}
+  /**
+   * List the first level of a directory
+   *
+   * @param string $path
+   * @todo add option to this method (level to scan, exclude file or not, juste directory, get more infomations...
+   * @return array
+   */
+  static public function listDirectory($path)
+  {
+    $res = array();
+    $dh = opendir($path);
+    if (!$dh) {
+      throw new USVN_Exception(T_("Can't read directory %s.", $path));
+    }
+    while (($subDir = readdir($dh)) !== false) {
+      if ($subDir != '.' && $subDir != '..' && $subDir != '.svn') {
+	array_push($res, $subDir);
+      }
+    }
+    return $res;
+  }
 
-	/**
-	 * Return true if the first path is include into the other path
-	 *
-	 * @param string $path1
-	 * @param string $path2
-	 * @return boolean
-	 */
-	static public function firstDirectoryIsInclude($path1, $path2)
-	{
-		$tmp1 = realpath($path1);
-		$tmp2 = realpath($path2);
-		$tmp1 = str_replace('\\', '/', $tmp1);
-		$tmp2 = str_replace('\\', '/', $tmp2);
-		if (!strncmp($tmp1, $tmp2, strlen($tmp2))) {
-			return true;
-		}
-		return false;
-	}
+  /**
+   * Create and return a tmp directory
+   *
+   * @return string Path to tmp directory
+   */
+  static public function getTmpDirectory()
+  {
+    $path = tempnam(sys_get_temp_dir(), "USVN_");
+    unlink($path);
+    mkdir($path);
+    return $path;
+  }
+
+  /**
+   * Return true if path === / on Unix or path == C: or D: or ... on Windows
+   *
+   * @param Path
+   * @return boolean
+   */
+  static public function isRootDirectory($path)
+  {
+    if(strtoupper(substr(PHP_OS, 0,3)) == 'WIN' ) {
+      if (!preg_match('#[A-Z]:([\\\\/]+).+#', $path)) {
+	return true;
+      }
+      else {
+	return false;
+      }
+    }
+    else {
+      return $path === '/';
+    }
+  }
+
+  /**
+   * Return true if the first path is include into the other path
+   *
+   * @param string $path1
+   * @param string $path2
+   * @return boolean
+   */
+  static public function firstDirectoryIsInclude($path1, $path2)
+  {
+    $tmp1 = realpath($path1);
+    $tmp2 = realpath($path2);
+    $tmp1 = str_replace('\\', '/', $tmp1);
+    $tmp2 = str_replace('\\', '/', $tmp2);
+    if (!strncmp($tmp1, $tmp2, strlen($tmp2))) {
+      return true;
+    }
+    return false;
+  }
 	
-	/**
-	 * Copy a file, or recursively copy a folder and its contents
-	 *
-	 * @author      Aidan Lister <aidan@php.net>
-	 * @version     1.0.1
-	 * @link        http://aidanlister.com/repos/v/function.copyr.php
-	 * @param       string   $source    Source path
-	 * @param       string   $dest      Destination path
-	 * @return      bool     Returns TRUE on success, FALSE on failure
-	 */
-	static public function copyr($source, $dest)
-	{
-	    // Check for symlinks
-	    if (is_link($source)) {
-	        return symlink(readlink($source), $dest);
-	    }
-	    // Simple copy for a file
-	    if (is_file($source)) {
-	        return copy($source, $dest);
-	    }
-	    // Make destination directory
-	    if (!is_dir($dest)) {
-	        mkdir($dest);
-	    }
-	    // Loop through the folder
-	    $dir = dir($source);
-	    while (false !== $entry = $dir->read()) {
-	        // Skip pointers
-	        if ($entry == '.' || $entry == '..') {
-	            continue;
-	        }
-	        // Deep copy directories
-	        USVN_DirectoryUtils::copyr("$source/$entry", "$dest/$entry");
-	    }
-	    // Clean up
-	    $dir->close();
-	    return true;
-	}
+  /**
+   * Copy a file, or recursively copy a folder and its contents
+   *
+   * @author      Aidan Lister <aidan@php.net>
+   * @version     1.0.1
+   * @link        http://aidanlister.com/repos/v/function.copyr.php
+   * @param       string   $source    Source path
+   * @param       string   $dest      Destination path
+   * @return      bool     Returns TRUE on success, FALSE on failure
+   */
+  static public function copyr($source, $dest)
+  {
+    // Check for symlinks
+    if (is_link($source)) {
+      return symlink(readlink($source), $dest);
+    }
+    // Simple copy for a file
+    if (is_file($source)) {
+      return copy($source, $dest);
+    }
+    // Make destination directory
+    if (!is_dir($dest)) {
+      mkdir($dest);
+    }
+    // Loop through the folder
+    $dir = dir($source);
+    while (false !== $entry = $dir->read()) {
+      // Skip pointers
+      if ($entry == '.' || $entry == '..') {
+	continue;
+      }
+      // Deep copy directories
+      USVN_DirectoryUtils::copyr("$source/$entry", "$dest/$entry");
+    }
+    // Clean up
+    $dir->close();
+    return true;
+  }
 }
