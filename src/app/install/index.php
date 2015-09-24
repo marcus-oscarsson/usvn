@@ -34,7 +34,11 @@ if (file_exists(USVN_CONFIG_FILE))
 	catch (Exception $e)
 	{
 	}
+} else{
+  $GLOBALS['language'] = 'en_US'
 }
+
+
 USVN_Translation::initTranslation($GLOBALS['language'], USVN_LOCALE_DIRECTORY);
 
 $installSteps = array(
