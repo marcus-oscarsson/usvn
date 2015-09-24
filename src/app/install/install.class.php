@@ -302,9 +302,6 @@ Order Allow,Deny
 Deny from all
 </Files>
 
-php_flag short_open_tag on
-php_flag magic_quotes_gpc off
-
 RewriteEngine on
 #RewriteCond
 RewriteBase "/{$path}/"
