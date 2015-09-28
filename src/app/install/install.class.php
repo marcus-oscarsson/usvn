@@ -366,6 +366,23 @@ EOF;
 	}
 
 	/**
+	 * This method will write create a eveyrbody user (*)
+	 */
+	static public function installEverybody()
+	{
+		$userTable = new USVN_Db_Table_Users();
+		$user = $userTable->createRow();
+		$user->login = '*';
+		$user->password = '';
+		$user->firstname = 'Everybody';
+		$user->lastname = '';
+		$user->email = '';
+		$user->is_admin = false;
+		$user->secret_id = md5(time().mt_rand());
+		$user->save();
+	}
+
+	/**
 	 * Mark USVN install
 	 *
 	 * @param string Path to the USVN config file
