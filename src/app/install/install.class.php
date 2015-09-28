@@ -373,7 +373,7 @@ EOF;
 		$userTable = new USVN_Db_Table_Users();
 		$user = $userTable->createRow();
 		$user->login = '*';
-		$user->password = '';
+		$user->password = md5(time().mt_rand());
 		$user->firstname = 'Everybody';
 		$user->lastname = '';
 		$user->email = '';
