@@ -198,7 +198,7 @@ class USVN_Project
                                . $project_name,
                                Zend_Registry::get('config')->subversion->path
                                . DIRECTORY_SEPARATOR
-                               . 'svn-removed'
+                               . 'removed-repos'
                                . DIRECTORY_SEPARATOR
                                . $project_name
                                . DIRECTORY_SEPARATOR);
