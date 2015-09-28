@@ -192,15 +192,16 @@ class USVN_Project
     }
 
     USVN_DirectoryUtils::copyr(Zend_Registry::get('config')->subversion->path
-			       . DIRECTORY_SEPARATOR
-			       . 'svn'
-			       . DIRECTORY_SEPARATOR
-			       . $project_name,
-			       Zend_Registry::get('config')->subversion->path
-			       . DIRECTORY_SEPARATOR
-			       . 'svn-removed'
-			       . DIRECTORY_SEPARATOR
-			       . $project_name);
+                               . DIRECTORY_SEPARATOR
+                               . 'svn'
+                               . DIRECTORY_SEPARATOR
+                               . $project_name,
+                               Zend_Registry::get('config')->subversion->path
+                               . DIRECTORY_SEPARATOR
+                               . 'svn-removed'
+                               . DIRECTORY_SEPARATOR
+                               . $project_name
+                               . DIRECTORY_SEPARATOR);
 
     USVN_DirectoryUtils::removeDirectory(Zend_Registry::get('config')->subversion->path
 					 . DIRECTORY_SEPARATOR

@@ -157,7 +157,7 @@ class USVN_DirectoryUtils
     }
     // Make destination directory
     if (!is_dir($dest)) {
-      mkdir($dest);
+      mkdir($dest, 0777, True);
     }
     // Loop through the folder
     $dir = dir($source);
