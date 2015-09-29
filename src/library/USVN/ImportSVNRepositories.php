@@ -92,7 +92,7 @@ class USVN_ImportSVNRepositories
    * 									$options['admin'] = true|false)
    * @return array
    */
-  public function addSVNRepositoriesToImport($path, $options = array('login' => '*',
+  public function addSVNRepositoriesToImport($path, $options = array('login' => 0,
 								     'name' => '',
 								     'description' => '',
 								     'creategroup' => false,
