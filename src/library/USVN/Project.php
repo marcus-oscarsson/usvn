@@ -106,8 +106,8 @@ class USVN_Project
     if ($create_svn_directories) {
       $acces_rights->setRightByPath($group->groups_id, '/', true, false);
       $acces_rights->setRightByPath($group->groups_id, '/branches', true, true);
-      $acces_rights->setRightByPath($group->groups_id, '/tags', true, true);
-      $acces_rights->setRightByPath($group->groups_id, '/trunk', true, true);
+      $acces_rights->setRightByPath($group->groups_id, '/releases', true, true);
+      $acces_rights->setRightByPath($group->groups_id, '/dev', true, true);
     }
     else {
       $acces_rights->setRightByPath($group->groups_id, '/', true, true);

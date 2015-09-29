@@ -18,7 +18,7 @@
 				echo '<label for="creategroup">' . T_('Create group for project:') . '</label>'. $this->formCheckbox('creategroup', 1,  array('checked' => true));
 				echo '<label for="addmetogroup">' . T_('Add me to project group:') . '</label>'. $this->formCheckbox('addmetogroup', 1,  array('checked' => true));
 				echo '<label for="admin">' . T_('Add me as admin of the project:') . '</label>'. $this->formCheckbox('admin', 1,  array('checked' => true));
-				echo '<label for="createsvndir">' . T_('Create SVN standard directories (/trunk, /branches and /tags):') . '</label>'. $this->formCheckbox('createsvndir', 1,  array('checked' => true));
+				echo '<label for="createsvndir">' . T_('Create SVN standard directories (/dev, /branches and /releases):') . '</label>'. $this->formCheckbox('createsvndir', 1,  array('checked' => true));
 			}
 			else if ($this->action == 'edit')
 			{
