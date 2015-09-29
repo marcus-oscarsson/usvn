@@ -368,18 +368,11 @@ EOF;
 	/**
 	 * This method will write create a eveyrbody user (*)
 	 */
-	static public function installEverybody()
+	static public function installEverybodyGroup()
 	{
-		$userTable = new USVN_Db_Table_Users();
-		$user = $userTable->createRow();
-		$user->login = '*';
-		$user->password = md5(time().mt_rand());
-		$user->firstname = 'Everybody';
-		$user->lastname = '';
-		$user->email = '';
-		$user->is_admin = false;
-		$user->secret_id = md5(time().mt_rand());
-		$user->save();
+	  $table = new USVN_Db_Table_Groups();
+	  $group = $table->createRow(array("groups_name" => "__everybody__"));
+	  $group->save();
 	}
 
 	/**

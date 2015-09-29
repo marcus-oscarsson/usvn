@@ -147,7 +147,7 @@ function installationOperation(&$step)
 
 		case 7:
 			Install::installAdmin(USVN_CONFIG_FILE, $_POST['login'], $_POST['password'], $_POST['firstname'], $_POST['lastname'], $_POST['email']);
-			Install::installEverybody();
+			Install::installEverybodyGroup();
 		break;
 
 		case 8:
